@@ -4,4 +4,4 @@ project(data)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS -O2)
 
-add_executable(data floryan_trip.cpp)
+add_executable(data 10-02/unique_die.cpp)
