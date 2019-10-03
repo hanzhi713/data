@@ -14,7 +14,7 @@ struct Temp {
     double cost;
 };
 
-double prim(double *matrix, double* keys, int n) {
+double prim(const double *matrix, double* keys, int n) {
     int start = 0;
     auto comp = [](Temp &a, Temp &b) { return a.cost > b.cost; };
     priority_queue<Temp, vector<Temp>, decltype(comp)> q(comp);
