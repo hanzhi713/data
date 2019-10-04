@@ -4,4 +4,4 @@ project(data)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS -O2)
 
-add_executable(data 10-02/unique_die.cpp)
+add_executable(data 10-02/satellite.cpp)
