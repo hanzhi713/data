@@ -3,13 +3,11 @@ using namespace std;
 
 int rec(int start, vector<int> *v, bool *visited) {
     int number = 0;
-    for (int i = 0; i < v[start].size(); i++) {
-        int neighbor = v[start][i];
-
-        for (int j = 0; j < v[neighbor].size(); j++) {
-            if (!visited[v[neighbor][j]]) {
-                visited[v[neighbor][j]] = true;
-                number += rec(v[neighbor][j], v, visited);
+    for (auto neighbor : v[start]) {
+        for (auto node : v[neighbor]) {
+            if (!visited[node]) {
+                visited[node] = true;
+                number += rec(node, v, visited);
             }
         }
         if (!visited[neighbor]) {
@@ -21,15 +19,25 @@ int rec(int start, vector<int> *v, bool *visited) {
     return number;
 }
 
-void dfs(int start, vector<int> *v, bool *visited, vector<int> &component) {
+int bfs(int start, bool *visited, vector<int> *adjList, int *buffer) {
+    queue<int> q;
+    buffer[0] = start;
+    int count = 1;
+    q.push(start);
     visited[start] = true;
-    component.push_back(start);
-    for (int i = 0; i < v[start].size(); i++) {
-        if (!visited[v[start][i]]) {
-            visited[v[start][i]] = true;
-            dfs(v[start][i], v, visited, component);
+
+    while (!q.empty()) {
+        start = q.front();
+        q.pop();
+        for (auto i : adjList[start]) {
+            if (!visited[i]) {
+                visited[i] = true;
+                buffer[count++] = i;
+                q.push(i);
+            }
         }
     }
+    return count;
 }
 
 int main() {
@@ -39,29 +47,24 @@ int main() {
     for (int i = 0; i < m; i++) {
         int t, s;
         cin >> t >> s;
-        v[t - 1].push_back(s - 1);
-        v[s - 1].push_back(t - 1);
+        t--;
+        s--;
+        v[t].push_back(s);
+        v[s].push_back(t);
     }
-
     bool *hasComp = new bool[n]();
+    bool *visited = new bool[n]();
+    int *comp = new int[n]();
     int count = 0;
     int globalMin = INT32_MAX;
     for (int i = 0; i < n; i++) {
         if (!hasComp[i]) {
-            vector<int> temp;
-            dfs(i, v, hasComp, temp);
-            count++;
-
-            int min = INT32_MAX;
-            bool *visited = new bool[n]();
-            int v123 = rec(temp[0], v, visited);
-            min = v123 == 0 ? 0 : 1;
-
-            if (min < globalMin && temp.size() > 1)
+            int num_nodes = bfs(i, hasComp, v, comp);
+            int min = rec(comp[0], v, visited) != 0;
+            if (min < globalMin && num_nodes > 1)
                 globalMin = min;
-            delete[] visited;
+            count++;
         }
     }
-
     cout << count - 1 + globalMin << endl;
 }
