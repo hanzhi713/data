@@ -26,10 +26,10 @@ vector<int> topsort(vector<vector<int>>& graph, int* degrees){
         int idx = q.top();
         q.pop();
         result.push_back(idx);
-        for(int i = 0; i < graph[idx].size(); i++){
-            degrees[graph[idx][i]] -= 1;
-            if(degrees[graph[idx][i]] == 0){
-                q.push(graph[idx][i]);
+        for(auto v : graph[idx]){
+            degrees[v] -= 1;
+            if(degrees[v] == 0){
+                q.push(v);
             }
         }
         counter++;

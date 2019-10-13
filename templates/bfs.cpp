@@ -22,11 +22,10 @@ void bfs(vector<int>* graph, int s){
     
     int* distance = new int[n];
     int* path = new int[n];
-    memset(distance, -1, n * 4);
-    memset(path, -1, n * 4);
+    memset(distance, -1, n * sizeof(int));
+    memset(path, -1, n * sizeof(int));
 
     distance[s] = 0;
-
     while(!q.empty()){
         v = q.front();
         q.pop();

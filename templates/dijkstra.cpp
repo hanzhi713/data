@@ -3,46 +3,62 @@
  * clang++ -o dijkstra dijkstra.cpp && ./dijkstra
  */
 #include <bits/stdc++.h>
+
 using namespace std;
 
-int dijkstra(vector<vector<int>>& graph, int s){
-    int* distance = new int[graph.size()];
-    bool* known = new bool[graph.size()];
-    memset(distance, 0x7f, graph.size() * 4); // actually to intmax lol
-    memset(known, 0, graph.size());
+constexpr int SIZE = 20;
+double graph[SIZE][SIZE] = {{0, 0, 0, 0, 4, 3, 0, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3},
+                            {0, 0, 0, 0, 2, 4, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 1, 0, 4},
+                            {0, 0, 0, 4, 0, 4, 2, 0, 4, 0, 4, 0, 1, 1, 0, 0, 0, 0, 0, 4},
+                            {0, 0, 4, 0, 2, 4, 2, 3, 3, 2, 0, 4, 0, 3, 0, 0, 1, 1, 0, 0},
+                            {4, 2, 0, 2, 0, 0, 1, 4, 0, 0, 0, 0, 4, 0, 1, 3, 0, 0, 0, 0},
+                            {3, 4, 4, 4, 0, 0, 3, 1, 3, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 4},
+                            {0, 0, 2, 2, 1, 3, 0, 2, 0, 0, 0, 0, 3, 4, 0, 0, 0, 0, 0, 0},
+                            {3, 4, 0, 3, 4, 1, 2, 0, 0, 0, 2, 0, 4, 0, 2, 2, 4, 0, 3, 0},
+                            {2, 0, 4, 3, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1, 2, 0, 2, 0},
+                            {3, 0, 0, 2, 0, 0, 0, 0, 4, 0, 0, 4, 0, 2, 0, 2, 2, 0, 4, 0},
+                            {0, 0, 4, 0, 0, 0, 0, 2, 0, 0, 0, 1, 3, 4, 2, 3, 2, 3, 0, 4},
+                            {0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 1, 0, 0, 0, 0, 1, 4, 0, 0, 4},
+                            {0, 0, 1, 0, 4, 1, 3, 4, 0, 0, 3, 0, 0, 1, 0, 0, 2, 0, 0, 0},
+                            {0, 0, 1, 3, 0, 0, 4, 0, 0, 2, 4, 0, 1, 0, 2, 4, 4, 1, 4, 0},
+                            {0, 4, 0, 0, 1, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 0, 3, 0, 0},
+                            {0, 0, 0, 0, 3, 0, 0, 2, 1, 2, 3, 1, 0, 4, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 1, 0, 0, 0, 4, 2, 2, 2, 4, 2, 4, 0, 0, 0, 4, 2, 0},
+                            {0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 1, 3, 0, 4, 0, 4, 0},
+                            {3, 0, 0, 0, 0, 1, 0, 3, 2, 4, 0, 0, 0, 4, 0, 0, 2, 4, 0, 3},
+                            {3, 4, 4, 0, 0, 4, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 3, 0}};
 
-    distance[s] = 0;
-    int v, w;
-    v = s;
+double *dijkstra(int n, int v) {
+    auto *distance = new double[n];
+    distance[v] = 0;
+    for (int j = 1; j < n; ++j)
+        distance[j] = 10e300; //numeric_limits<double>::max();
 
-    auto comp = [&](int a, int b){
-        return distance[a] < distance[b];
+    auto comp = [=](int a, int b) {
+        return distance[a] > distance[b];
     };
-
     priority_queue<int, vector<int>, decltype(comp)> q(comp);
-
-    for(int i = 0; i < graph.size(); i++){
-        q.push(i);
-    }
-
-    while(!q.empty()){
+    q.push(v);
+    while (!q.empty()) {
         v = q.top();
         q.pop();
-        known[v] = true;
-
-        for(int i = 0; i < graph[v].size(); i++){
-            if(graph[v][i] == 0) continue;
-            w = i;
-            if(!known[w]){
-                if(distance[v] + graph[v][w] < distance[w]){
-                    distance[w] = distance[v] + graph[v][w];
-                }
+        for (int i = 0; i < n; i++) {
+            auto weight = graph[v][i];
+            if (weight == 0) continue;
+            if (distance[v] + weight < distance[i]) {
+                distance[i] = distance[v] + weight;
+                q.push(i);
             }
         }
     }
+    return distance;
 }
 
-int main(){
-    
+int main() {
+    auto *dist = dijkstra(SIZE, 0);
+    for (int i = 0; i < SIZE; i++) {
+        cout << dist[i] << " ";
+    }
+    cout << endl;
     return 0;
 }
