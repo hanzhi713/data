@@ -1,43 +1,34 @@
-//
-// Created by hanzhi713 on 10/13/19.
-//
-
 #include <bits/stdc++.h>
-
 using namespace std;
 
-bool buffer[2000007];
-char num[2000007];
+constexpr int MAX = 2000001;
+uint16_t not_prime[MAX] = { 0 };
 
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    cin.tie(nullptr);
 
-    memset(buffer, 0, sizeof(buffer));
-    for (int i = 2; i < 1000007; i++) {
-        int j = 2;
-        while (i * j < 2000007) {
-            buffer[i * j] = 1;
-            j++;
+    for (int x = 2; x * x < MAX; x++) {
+        if (!not_prime[x]) {
+            for (int i = x * x; i < MAX; i += x)
+                not_prime[i] = 1;
         }
     }
-
-    for (int i = 2; i < 2000007; i++) {
-        if (buffer[i] == 0) {
-            continue;
+    for (int x = 2; x < MAX; x++) {
+        if (not_prime[x]) {
+            for (int i = x; i < MAX; i += x)
+                not_prime[i] += 1;
         }
-
-        int j = 1;
-        while (i * j < 2000007) {
-            num[i * j] += 1;
-            j++;
-        }
+    }
+    for (int j = 2; j < MAX; ++j) {
+        not_prime[j] += not_prime[j] == 0;
     }
 
     int q, i;
     cin >> q;
-    while (q--) {
+    for (int _ = 0; _ < q; ++_) {
         cin >> i;
-        cout << num[i] + 1 << endl;
+        cout << not_prime[i] << '\n';
     }
+    return 0;
 }
