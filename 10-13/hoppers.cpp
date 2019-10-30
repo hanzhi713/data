@@ -56,7 +56,7 @@ int main() {
     bool *visited = new bool[n]();
     int *comp = new int[n]();
     int count = 0;
-    int globalMin = INT32_MAX;
+    int globalMin = 1;
     for (int i = 0; i < n; i++) {
         if (!hasComp[i]) {
             int num_nodes = bfs(i, hasComp, v, comp);
