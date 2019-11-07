@@ -5,7 +5,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define MAX 46341
-bool prime[MAX];
+bool prime[MAX] = {false};
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
