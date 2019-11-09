@@ -11,6 +11,7 @@ int main() {
     int n, k;
     cin >> n >> k;
     for (int i = 0; i < n; ++i) {
+        teams[i].reserve(k);
         auto &vec = pref[i];
         int q;
         cin >> q;
