@@ -1,6 +1,3 @@
-//
-// Created by ky on 10/12/19.
-//
 #include <bits/stdc++.h>
 using namespace std;
 

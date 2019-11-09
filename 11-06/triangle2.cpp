@@ -1,10 +1,10 @@
-//
-// Created by hanzhi713 on 11/6/2019.
-//
-
 #include <bits/stdc++.h>
 using namespace std;
 
+/**
+ * parametric line equation
+ * <x, y> = s * <v1, v2> + <b1, b2>
+ */
 struct Line {
     double v1;
     double v2;

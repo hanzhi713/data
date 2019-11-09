@@ -1,9 +1,4 @@
-/**
- * To compile and run:
- * clang++ -o dijkstra dijkstra.cpp && ./dijkstra
- */
 #include <bits/stdc++.h>
-
 using namespace std;
 
 constexpr int SIZE = 20;
