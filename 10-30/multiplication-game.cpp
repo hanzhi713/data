@@ -1,9 +1,6 @@
-//
-// Created by hanzhi713 on 10/30/19.
-//
-
 #include <bits/stdc++.h>
 using namespace std;
+
 #define MAX 46341
 bool prime[MAX] = {false};
 int main() {
