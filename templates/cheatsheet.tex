@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{blindtext}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{minted}
+\begin{document}
+\tableofcontents
+\section{Priority Queue}
+\begin{minted}{c++}
+    priority_queue<int, vector<int>, greater<int>> p; // min heap
+    priority_queue<int, vector<int>, less<int>> p; // max heap
+\end{minted}
+\section{Connected Components}
+\inputminted[linenos,breaklines]{c++}{connected_component.cpp}
+
+\section{BFS}
+\inputminted[linenos,breaklines]{c++}{bfs.cpp}
+
+\section{Dijkstra}
+\inputminted[linenos,breaklines]{c++}{dijkstra.cpp}
+
+\section{Line Equations}
+\inputminted[linenos,breaklines]{c++}{lines_equation.cpp}
+
+\section{Non Prime}
+\inputminted[linenos,breaklines]{c++}{Nonprime.cpp}
+
+\section{Prim}
+\inputminted[linenos,breaklines]{c++}{prim.cpp}
+
+
+\section{Prime Sieve}
+\inputminted[linenos,breaklines]{c++}{prime_sieve.cpp}
+
+\section{TopSort}
+\inputminted[linenos,breaklines]{c++}{topsort.cpp}
+
+\end{document}
